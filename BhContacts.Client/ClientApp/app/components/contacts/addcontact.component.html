@@ -1,0 +1,64 @@
+<p *ngIf="!contact"><em>Loading...</em></p>
+
+<div *ngIf="contact">
+    <h1 class="pull-left">Add Contact</h1>
+    <a [routerLink]="['/home']" class="btn btn-default pull-right padding-top">
+        Back
+    </a>
+    <form #contactForm="ngForm">
+        <table class='table'>
+            <tbody>
+                <tr>
+                    <td>First Name *</td>
+                    <td>
+                        <input id="firstName" name="firstName" class="form-control" required [(ngModel)]="contact.firstName" class="form-control" #firstName="ngModel" />
+                        <div *ngIf="firstName.errors && (firstName.dirty || firstName.touched)" class="text-danger">
+                            <div [hidden]="!firstName.errors.required">
+                                Firstname is required.
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Last Name</td>
+                    <td><input id="lastName" name="lastName" [(ngModel)]="contact.lastName" class="form-control" #lastName="ngModel" /></td>
+                </tr>
+                <tr>
+                    <td>Organization</td>
+                    <td><input id="organization" name="organization" [(ngModel)]="contact.organization" class="form-control" #organization="ngModel" /></td>
+                </tr>
+                <tr>
+                    <td>Email Address *</td>
+                    <td>
+                        <input id="email" name="email" [(ngModel)]="contact.email" class="form-control" required #email="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" />
+                        <div *ngIf="email.errors && (email.dirty || email.touched)" class="text-danger">
+                            <div [hidden]="!email.errors.pattern">
+                                Email is invalid.
+                            </div>
+                            <div [hidden]="!phoneNumber.errors.required">
+                                Email is required.
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Phone Number *</td>
+                    <td>
+                        <input id="phoneNumber" name="phoneNumber" [(ngModel)]="contact.phoneNumber" class="form-control" required pattern="[0-9]{10}" #phoneNumber="ngModel" />
+                        <div *ngIf="phoneNumber.errors && (phoneNumber.dirty || phoneNumber.touched)" class="text-danger">
+                            <div [hidden]="!phoneNumber.errors.pattern">
+                                Phone number is invalid.
+                            </div>
+                            <div [hidden]="!phoneNumber.errors.required">
+                                Phone number is required.
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button (click)="addContact()" class="btn btn-primary" [disabled]="!contactForm.form.valid" disabled="disabled">Add</button>
+    </form>
+
+</div>
+
